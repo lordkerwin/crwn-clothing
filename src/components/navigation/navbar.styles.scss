@@ -1,0 +1,10 @@
+.links-container {
+  @apply flex gap-2;
+  @apply list-none;
+  li {
+    @apply block;
+    .link {
+      @apply text-xl leading-none;
+    }
+  }
+}
