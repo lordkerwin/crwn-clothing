@@ -1,9 +1,10 @@
-import { useContext } from "react";
-import { CategoriesContext } from "../../contexts/categories.context";
 import CategoryPreview from "../../components/category-preview/category-preview.component";
+import { selectCategoriesMap } from "../../store/categories/category.selector";
+import { useSelector } from "react-redux";
 
 const CategoriesPreview = () => {
-    const { categoriesMap } = useContext(CategoriesContext);
+    const categoriesMap = useSelector(selectCategoriesMap);
+
     return (
         <div className="container">
             <div className="flex flex-col gap-y-10">
@@ -11,7 +12,7 @@ const CategoriesPreview = () => {
                     <CategoryPreview
                         key={title}
                         title={title}
-                        items={categoriesMap[title].items}
+                        items={categoriesMap[title]}
                     />
                 ))}
             </div>

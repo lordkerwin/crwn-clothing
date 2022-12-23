@@ -1,11 +1,15 @@
-import { useContext } from "react";
-import { CartContext } from "../../contexts/cart.context";
 import Button from "../button/button.component";
+import { useDispatch, useSelector } from "react-redux";
+import { addItemToCart } from "../../store/cart/cart.action";
+import { selectCartItems } from "../../store/cart/cart.selector";
 
 const ProductCard = ({ product }) => {
     const { name, price, imageUrl } = product;
+    const cartItems = useSelector(selectCartItems);
+    const dispatch = useDispatch();
 
-    const { addItemToCart } = useContext(CartContext);
+    const handleAddToCart = () => dispatch(addItemToCart(cartItems, product));
+
 
     return (
         <div className="group hover:cursor-pointer">
@@ -18,7 +22,7 @@ const ProductCard = ({ product }) => {
                 <div className="bg-white absolute w-full h-full top-0 opacity-0 group-hover:opacity-60 flex items-center justify-center transition">
                     <Button
                         buttonType="inverted"
-                        onClick={() => addItemToCart(product)}
+                        onClick={handleAddToCart}
                     >
                         Add to Cart
                     </Button>

@@ -1,11 +1,23 @@
-import { useContext } from "react";
-import { CartContext } from "../../contexts/cart.context";
+import {
+    addItemToCart,
+    clearItemFromCart,
+    removeItemToCart,
+} from "../../store/cart/cart.action";
+import { useDispatch, useSelector } from "react-redux";
+
+import { selectCartItems } from "../../store/cart/cart.selector";
 
 const CheckoutItem = ({ cartItem }) => {
     const { name, quantity, imageUrl, price } = cartItem;
 
-    const { addItemToCart, removeItemFromCart, clearItemFromCart } =
-        useContext(CartContext);
+    const dispatch = useDispatch();
+    const cartItems = useSelector(selectCartItems);
+
+    const handleClearItem = () =>
+        dispatch(clearItemFromCart(cartItems, cartItem));
+    const handleAddItem = () => dispatch(addItemToCart(cartItems, cartItem));
+    const handleRemoveItem = () =>
+        dispatch(removeItemToCart(cartItems, cartItem));
 
     return (
         <li className="flex items-center justify-between py-6 sm:py-10 gap-10">
@@ -19,7 +31,7 @@ const CheckoutItem = ({ cartItem }) => {
                 <div className="col-span-1 flex justify-center">
                     <button
                         className="disabled:text-gray-300 disabled:cursor-not-allowed"
-                        onClick={() => removeItemFromCart(cartItem)}
+                        onClick={handleRemoveItem}
                         disabled={quantity === 1}
                     >
                         <svg
@@ -42,10 +54,7 @@ const CheckoutItem = ({ cartItem }) => {
                         {quantity}
                     </div>
 
-                    <button
-                        className=""
-                        onClick={() => addItemToCart(cartItem)}
-                    >
+                    <button className="" onClick={handleAddItem}>
                         <svg
                             xmlns="http://www.w3.org/2000/svg"
                             fill="none"
@@ -67,7 +76,7 @@ const CheckoutItem = ({ cartItem }) => {
                 </div>
                 <button
                     className="col-span-1 flex justify-end text-sm font-bold"
-                    onClick={() => clearItemFromCart(cartItem)}
+                    onClick={handleClearItem}
                 >
                     Remove
                 </button>

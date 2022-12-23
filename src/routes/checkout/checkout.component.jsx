@@ -1,9 +1,15 @@
-import { useContext, useEffect } from "react";
-import { CartContext } from "../../contexts/cart.context";
+import {
+    selectCartItems,
+    selectCartTotal,
+} from "../../store/cart/cart.selector";
+
 import CheckoutItem from "./checkout-item.component";
+import { useEffect } from "react";
+import { useSelector } from "react-redux";
 
 const CheckoutPage = () => {
-    const { cartItems, cartTotal } = useContext(CartContext);
+    const cartItems = useSelector(selectCartItems);
+    const cartTotal = useSelector(selectCartTotal);
 
     useEffect(() => {
         console.log(cartItems);
